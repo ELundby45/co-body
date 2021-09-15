@@ -58,6 +58,28 @@ describe('parse(req, opts)', function() {
     });
   });
 
+  describe('with valid msgpack', function() {
+    it('should parse', function(done) {
+      const app = koa();
+      const msgpack = require('@msgpack/msgpack');
+
+      app.use(function* () {
+        this.body = yield parse(this);
+        this.body.should.eql({ foo: 'bar' });
+        done();
+      });
+
+      const payload = msgpack.encode({ foo: 'bar' });
+      request(app.callback())
+        .post('/')
+        .type('application/msgpack')
+        .set('content-type', 'application/msgpack')
+        .send(Buffer.from(payload))
+        .expect(200)
+        .end(function() {});
+    });
+  });
+
   describe('with know json content-type', function() {
     const app = koa();
 

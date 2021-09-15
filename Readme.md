@@ -52,6 +52,9 @@ var body = await parse.form(req);
 // text/plain
 var body = await parse.text(req);
 
+// application/msgpack
+var body = await parse.msgpack(req);
+
 // either
 var body = await parse(req);
 
@@ -73,6 +76,9 @@ var body = await parse.form(this);
 
 // text/plain
 var body = await parse.text(this);
+
+// application/msgpack
+var body = await parse.msgpack(this);
 
 // either
 var body = await parse(this);
